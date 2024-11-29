@@ -1,0 +1,26 @@
+<div>
+<table>
+    <thead>
+        <th>Nom</th>
+        <th>Code</th>
+        <th>CCV</th>
+        <th>Date</th>
+        <th></th>
+        <th></th>
+
+    </thead>
+    <tbody>
+        @for (card of cards(); track $index) {
+            <tr>
+                <td>{{card.Name}}</td>
+                <td>{{card.Code}}</td>
+                <td>{{card.CCV}}</td>
+                <td>{{card.ExpirationMonth}}/{{card.ExpirationYear}}</td>
+                <td><button (click)="update(card)" type="button">Modifier</button></td>
+                <td><button (click)="delete(card.Code)" type="button">Supprimer</button></td>
+            </tr>
+        }
+    </tbody>
+</table>
+<app-form-update [selectCard]=selectedCard></app-form-update>
+</div>
