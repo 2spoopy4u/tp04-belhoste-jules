@@ -1,23 +1,16 @@
-import { Component, inject, Input } from '@angular/core';
-import {
-  FormControl,
-  ReactiveFormsModule,
-  FormGroup,
-  FormBuilder,
-  Validators,
-} from '@angular/forms';
+import { Component, inject } from '@angular/core';
 import { CardCRUDService } from '../card-crud.service';
 import { Card } from '../card';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-form-update',
-  standalone: true,
-  imports: [ReactiveFormsModule],
-  templateUrl: './form-update.component.html',
-  styleUrl: './form-update.component.css'
+  selector: 'app-list',
+  standalone: false,
+  templateUrl: './list.component.html',
+  styleUrl: './list.component.css'
 })
-export class FormUpdateComponent {
-  @Input() selectCard?:Card;
+export class ListComponent {
+  selectedCard?:Card
   updateForm: FormGroup;
   
   constructor(private formBuilder: FormBuilder) {
@@ -29,14 +22,24 @@ export class FormUpdateComponent {
       ExpirationYear: new FormControl('', [Validators.required,Validators.pattern('[0-9][0-9][0-9][0-9]')]),
 
     });
-  }  
+  }
   cardService = inject(CardCRUDService);
+  cards = this.cardService.getCards;
+
   ngOnInt() {
    ;
+  }
+  delete(code:number){
+    this.cardService.delete(code);
+  }
+  selectCard(code:number){
+    let card =this.cardService.getCards().find((card)=>card.Code===code);
+    this.selectedCard= new Card(card!.Name,card!.Code,card!.CCV,card!.ExpirationMonth,card!.ExpirationYear);
+    console.log(this.selectedCard);
+
   }
   update(){
     console.log(this.updateForm.value);
     this.cardService.update(this.updateForm.value);
   }
-
 }

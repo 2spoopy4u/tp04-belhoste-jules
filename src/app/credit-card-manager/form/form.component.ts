@@ -9,8 +9,7 @@ import {
 import { CardCRUDService } from '../card-crud.service';
 @Component({
   selector: 'app-form',
-  standalone: true,
-  imports: [ReactiveFormsModule],
+  standalone: false,
   templateUrl: './form.component.html',
   styleUrl: './form.component.css'
 })
